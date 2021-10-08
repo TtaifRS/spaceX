@@ -3,6 +3,7 @@ module.exports = {
   plugins: ['react', 'jsx-a11y', 'import'],
   rules: {
     'linebreak-style': 0,
+    'no-param-reassign': 0,
   },
   parser: 'babel-eslint',
   parserOptions: {
