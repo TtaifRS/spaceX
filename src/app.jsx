@@ -1,8 +1,9 @@
 import React from 'react';
+import CardComponent from './components/CardComponent';
 
 const app = () => (
   <div>
-    <h1>Hello World</h1>
+    <CardComponent />
   </div>
 );
 
