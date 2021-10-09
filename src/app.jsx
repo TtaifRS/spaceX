@@ -1,10 +1,11 @@
 import React from 'react';
-import CardComponent from './components/CardComponent';
+import Grid from '@mui/material/Grid';
+import HomePage from './pages/HomePage';
 
 const app = () => (
-  <div>
-    <CardComponent />
-  </div>
+  <Grid container justifyContent="center" alignItems="center">
+    <HomePage />
+  </Grid>
 );
 
 export default app;
