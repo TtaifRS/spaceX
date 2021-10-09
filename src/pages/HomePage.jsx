@@ -1,16 +1,65 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
+import { styled, alpha } from '@mui/material/styles';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import InputBase from '@mui/material/InputBase';
+import SearchIcon from '@mui/icons-material/Search';
 
 import CardComponet from '../components/CardComponent';
-import HeaderComponent from '../components/HeaderComponent';
 
 import { getDatas } from '../redux/features/datas/datasSlice';
 
+const Search = styled('div')(({ theme }) => ({
+  position: 'relative',
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  '&:hover': {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginLeft: 0,
+  width: '50%',
+  [theme.breakpoints.up('sm')]: {
+    marginLeft: theme.spacing(1),
+    width: '50%',
+  },
+}));
+
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: '100%',
+  position: 'absolute',
+  pointerEvents: 'none',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: 'inherit',
+  '& .MuiInputBase-input': {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      width: '12ch',
+      '&:focus': {
+        width: '20ch',
+      },
+    },
+  },
+}));
+
 const HomePage = () => {
   const dispatch = useDispatch();
+
+  const [searchTerm, setSearchTerm] = useState('');
 
   const { datas } = useSelector((state) => state.datas);
 
@@ -20,10 +69,40 @@ const HomePage = () => {
 
   return (
     <>
-      <HeaderComponent />
+      <AppBar position="static" style={{ background: '#2E3B55' }}>
+        <Toolbar>
+          <Typography
+            variant="h4"
+            noWrap
+            component="div"
+            sx={{ flexGrow: 1, display: { xs: '3', sm: 'block' } }}
+          >
+            SpaceX
+          </Typography>
+          <Search>
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="Rocket name"
+              inputProps={{ 'aria-label': 'search' }}
+              value={searchTerm}
+              onChange={(e) => { setSearchTerm(e.target.value); }}
+            />
+          </Search>
+        </Toolbar>
+      </AppBar>
       <Box display="flex" justifyContent="center" alignItems="center" sx={{ mx: '30px', mt: '60px' }}>
         <Grid container spacing={8}>
-          {datas && datas.map((data) => {
+          {datas && datas.filter((data) => {
+            if (searchTerm === '') {
+              return data;
+            // eslint-disable-next-line no-else-return
+            } else if (data.rocket.rocket_name.toLowerCase().includes(searchTerm.toLowerCase())) {
+              return data;
+            }
+            return null;
+          }).map((data) => {
             const {
               mission_name,
               launch_date_utc,
