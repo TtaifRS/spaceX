@@ -71,8 +71,6 @@ const HomePage = () => {
     setItems(datas);
   }, []);
 
-  // eslint-disable-next-line no-unused-vars
-
   const successLaunch = () => {
     const successFiltered = datas.filter((data) => {
       if (data.launch_success) {
@@ -92,6 +90,17 @@ const HomePage = () => {
       return null;
     });
     setItems(failedFiltered);
+    setSearchTerm('');
+  };
+
+  const upcomingLaunch = () => {
+    const upcomingFiltered = datas.filter((data) => {
+      if (data.upcoming) {
+        return data;
+      }
+      return null;
+    });
+    setItems(upcomingFiltered);
     setSearchTerm('');
   };
 
@@ -120,10 +129,12 @@ const HomePage = () => {
           </Search>
         </Toolbar>
       </AppBar>
-      <Grid sx={{ mt: '30px' }}>
-        <Button variant="outlined" onClick={() => { setItems(datas); }}>All</Button>
-        <Button variant="outlined" onClick={successLaunch}>Launch Success</Button>
-        <Button variant="outlined" onClick={failureLaunch}>Launch failure</Button>
+      <Grid item sx={{ mt: '30px' }} xs={6}>
+        <h1> Filter By: </h1>
+        <Button variant="contained" sx={{ mr: '5px', mb: '5px' }} color="primary" onClick={() => { setItems(datas); }}>All</Button>
+        <Button variant="contained" sx={{ mr: '5px', mb: '5px' }} color="success" onClick={successLaunch}>Launch Success</Button>
+        <Button variant="contained" sx={{ mr: '5px', mb: '5px' }} color="error" onClick={failureLaunch}>Launch failure</Button>
+        <Button variant="contained" sx={{ mr: '5px', mb: '5px' }} color="info" onClick={upcomingLaunch}>Upcoming</Button>
       </Grid>
       <Box display="flex" justifyContent="center" alignItems="center" sx={{ mx: '30px', mt: '60px' }}>
         <Grid container spacing={8}>
