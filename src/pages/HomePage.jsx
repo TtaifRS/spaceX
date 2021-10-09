@@ -9,6 +9,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
+import Button from '@mui/material/Button';
 
 import CardComponet from '../components/CardComponent';
 
@@ -59,13 +60,40 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const HomePage = () => {
   const dispatch = useDispatch();
 
-  const [searchTerm, setSearchTerm] = useState('');
-
   const { datas } = useSelector((state) => state.datas);
+
+  const [searchTerm, setSearchTerm] = useState('');
+  const [items, setItems] = useState(datas);
 
   useEffect(() => {
     dispatch(getDatas());
+    // eslint-disable-next-line no-unused-expressions
+    setItems(datas);
   }, []);
+
+  // eslint-disable-next-line no-unused-vars
+
+  const successLaunch = () => {
+    const successFiltered = datas.filter((data) => {
+      if (data.launch_success) {
+        return data;
+      }
+      return null;
+    });
+    setSearchTerm('');
+    setItems(successFiltered);
+  };
+
+  const failureLaunch = () => {
+    const failedFiltered = datas.filter((data) => {
+      if (!data.launch_success) {
+        return data;
+      }
+      return null;
+    });
+    setItems(failedFiltered);
+    setSearchTerm('');
+  };
 
   return (
     <>
@@ -87,14 +115,19 @@ const HomePage = () => {
               placeholder="Rocket name"
               inputProps={{ 'aria-label': 'search' }}
               value={searchTerm}
-              onChange={(e) => { setSearchTerm(e.target.value); }}
+              onChange={(e) => { setSearchTerm(e.target.value); setItems(datas); }}
             />
           </Search>
         </Toolbar>
       </AppBar>
+      <Grid sx={{ mt: '30px' }}>
+        <Button variant="outlined" onClick={() => { setItems(datas); }}>All</Button>
+        <Button variant="outlined" onClick={successLaunch}>Launch Success</Button>
+        <Button variant="outlined" onClick={failureLaunch}>Launch failure</Button>
+      </Grid>
       <Box display="flex" justifyContent="center" alignItems="center" sx={{ mx: '30px', mt: '60px' }}>
         <Grid container spacing={8}>
-          {datas && datas.filter((data) => {
+          {items && items.filter((data) => {
             if (searchTerm === '') {
               return data;
             // eslint-disable-next-line no-else-return
