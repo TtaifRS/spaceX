@@ -51,7 +51,7 @@ export default function cardComponent({
   };
 
   return (
-    <Card sx={{ maxWidth: 345 }} style={{ backgroundColor: '#e3f2fd' }}>
+    <Card style={{ backgroundColor: '#e3f2fd' }}>
       {/* Card Header */}
       <CardHeader
         title={missonName}
