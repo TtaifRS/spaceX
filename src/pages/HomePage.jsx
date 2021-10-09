@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import { useDispatch, useSelector } from 'react-redux';
@@ -62,6 +62,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const HomePage = () => {
   const dispatch = useDispatch();
 
+  const ref = useRef(null);
+
   const { datas } = useSelector((state) => state.datas);
 
   const [searchTerm, setSearchTerm] = useState('');
@@ -71,6 +73,9 @@ const HomePage = () => {
     dispatch(getDatas());
     // eslint-disable-next-line no-unused-expressions
     setItems(datas);
+    setTimeout(() => {
+      ref.current.click();
+    }, 1000);
   }, []);
 
   const successLaunch = () => {
@@ -168,7 +173,7 @@ const HomePage = () => {
         <>
           <Grid item sx={{ mt: '30px' }} xs={6}>
             <h1> Filter By: </h1>
-            <Button variant="contained" sx={{ mr: '5px', mb: '5px' }} color="primary" onClick={() => { setItems(datas); }}>All</Button>
+            <Button variant="contained" sx={{ mr: '5px', mb: '5px' }} color="primary" ref={ref} onClick={() => { setItems(datas); }}>All</Button>
             <Button variant="outlined" sx={{ mr: '5px', mb: '5px' }} color="info" onClick={lastYearLaunch}>Last Year</Button>
             <Button variant="outlined" sx={{ mr: '5px', mb: '5px' }} color="info" onClick={lastMonthLaunch}>Last Month</Button>
             <Button variant="outlined" sx={{ mr: '5px', mb: '5px' }} color="info" onClick={lastWeekLaunch}>Last Week</Button>
