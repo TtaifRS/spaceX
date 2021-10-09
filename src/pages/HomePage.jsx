@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import Button from '@mui/material/Button';
+import { format } from 'timeago.js';
 
 import CardComponet from '../components/CardComponent';
 
@@ -104,6 +105,39 @@ const HomePage = () => {
     setSearchTerm('');
   };
 
+  const lastYearLaunch = () => {
+    const yearlyFiltered = datas.filter((data) => {
+      if (format(data.launch_date_utc) === '1 year ago') {
+        return data;
+      }
+      return null;
+    });
+    setItems(yearlyFiltered);
+    setSearchTerm('');
+  };
+
+  const lastMonthLaunch = () => {
+    const monthlyFiltered = datas.filter((data) => {
+      if (format(data.launch_date_utc) === '1 month ago') {
+        return data;
+      }
+      return null;
+    });
+    setItems(monthlyFiltered);
+    setSearchTerm('');
+  };
+
+  const lastWeekLaunch = () => {
+    const weeklyFiltered = datas.filter((data) => {
+      if (format(data.launch_date_utc) === '1 week ago') {
+        return data;
+      }
+      return null;
+    });
+    setItems(weeklyFiltered);
+    setSearchTerm('');
+  };
+
   return (
     <>
       <AppBar position="static" style={{ background: '#2E3B55' }}>
@@ -132,6 +166,9 @@ const HomePage = () => {
       <Grid item sx={{ mt: '30px' }} xs={6}>
         <h1> Filter By: </h1>
         <Button variant="contained" sx={{ mr: '5px', mb: '5px' }} color="primary" onClick={() => { setItems(datas); }}>All</Button>
+        <Button variant="outlined" sx={{ mr: '5px', mb: '5px' }} color="info" onClick={lastYearLaunch}>Last Year</Button>
+        <Button variant="outlined" sx={{ mr: '5px', mb: '5px' }} color="info" onClick={lastMonthLaunch}>Last Month</Button>
+        <Button variant="outlined" sx={{ mr: '5px', mb: '5px' }} color="info" onClick={lastWeekLaunch}>Last Week</Button>
         <Button variant="contained" sx={{ mr: '5px', mb: '5px' }} color="success" onClick={successLaunch}>Launch Success</Button>
         <Button variant="contained" sx={{ mr: '5px', mb: '5px' }} color="error" onClick={failureLaunch}>Launch failure</Button>
         <Button variant="contained" sx={{ mr: '5px', mb: '5px' }} color="info" onClick={upcomingLaunch}>Upcoming</Button>
