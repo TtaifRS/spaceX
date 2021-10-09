@@ -15,6 +15,9 @@ const store = configureStore({
   reducer: {
     datas: persistedReducer,
   },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+    serializableCheck: false,
+  }),
 });
 
 export default store;
