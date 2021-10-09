@@ -160,13 +160,3 @@ export default function cardComponent({
     </Card>
   );
 }
-
-// import React from 'react';
-
-// const CardComponent = () => (
-//   <div>
-//     Hi
-//   </div>
-// );
-
-// export default CardComponent;
