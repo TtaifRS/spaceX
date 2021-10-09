@@ -1,19 +1,20 @@
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
+import Link from '@mui/material/Link';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Collapse from '@mui/material/Collapse';
-// import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-// import { red } from '@mui/material/colors';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CancelIcon from '@mui/icons-material/Cancel';
+import ArticleIcon from '@mui/icons-material/Article';
+import YouTubeIcon from '@mui/icons-material/YouTube';
+import LanguageIcon from '@mui/icons-material/Language';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -27,58 +28,74 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-export default function RecipeReviewCard() {
+export default function cardComponent({
+  missonName,
+  date,
+  site,
+  image,
+  wikipedia,
+  article,
+  video,
+  info,
+  launchSuccess,
+  rocketName,
+  rocketType,
+  nationality,
+  manufacturer,
+  payloadType,
+}) {
   const [expanded, setExpanded] = React.useState(false);
-  // const [accExpanded, setAccExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
-  // const handleChange = (panel) => (event, isExpanded) => {
-  //   setAccExpanded(isExpanded ? panel : false);
-  // };
-
   return (
     <Card sx={{ maxWidth: 345 }} style={{ backgroundColor: '#e3f2fd' }}>
+      {/* Card Header */}
       <CardHeader
-        // avatar={(
-        //   <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-        //     F
-        //   </Avatar>
-        // )}
-        action={(
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        )}
-        title="FalconSat"
-        subheader="2006-03-24"
+        title={missonName}
+        subheader={date}
       />
+
+      {/* Card Media */}
+      {image
+      && (
       <CardMedia
         component="img"
         height="auto"
-        image="https://images2.imgbox.com/40/e3/GypSkayF_o.png"
-        alt="Paella dish"
+        image={image}
+        alt={rocketName}
       />
+      )}
+
+      {/* Card Content */}
       <CardContent>
         <Typography sx={{ fontSize: 14 }} variant="caption" color="text.secondary">
           Rocket Details
         </Typography>
         <Typography gutterBottom sx={{ fontSize: 32 }} variant="h1" component="div">
-          Falcon 1
+          {rocketName}
         </Typography>
+        {info && (
         <Typography variant="body2" color="text.secondary">
-          Engine failure at 33 seconds and loss of vehicle
+          {info}
         </Typography>
+        )}
       </CardContent>
+
+      {/* Card Action */}
       <CardActions disableSpacing>
-        <IconButton li aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
+        {/* Icons */}
+        <Link href={article} sx={{ ml: '5px' }} color="inherit">
+          <ArticleIcon style={{ color: '#1e88e5' }} />
+        </Link>
+        <Link href={video} sx={{ ml: '5px' }} color="inherit">
+          <YouTubeIcon style={{ color: 'red' }} />
+        </Link>
+        <Link href={wikipedia} sx={{ ml: '5px' }} color="inherit">
+          <LanguageIcon style={{ color: '#6B6B6B' }} />
+        </Link>
         <ExpandMore
           expand={expanded}
           onClick={handleExpandClick}
@@ -88,32 +105,68 @@ export default function RecipeReviewCard() {
           <ExpandMoreIcon />
         </ExpandMore>
       </CardActions>
+
+      {/* Details Content */}
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography variant="h5" gutterBottom>Details</Typography>
           <Typography variant="caption">
             Rocket Type
           </Typography>
-          <Typography variant="h6"> Marlin A1 </Typography>
-          <Typography variant="caption">
-            Rocket Type
+          <Typography variant="h6">
+            {rocketType}
           </Typography>
-          <Typography variant="h6"> Marlin A1 </Typography>
           <Typography variant="caption">
-            Rocket Type
+            Nationality
           </Typography>
-          <Typography variant="h6"> Marlin A1 </Typography>
+          <Typography variant="h6">
+            {nationality}
+          </Typography>
           <Typography variant="caption">
-            Rocket Type
+            Manufacturer
           </Typography>
-          <Typography variant="h6"> Marlin A1 </Typography>
+          <Typography variant="h6">
+            {manufacturer}
+          </Typography>
           <Typography variant="caption">
-            Rocket Type
+            Payload Type
           </Typography>
-          <Typography variant="h6"> Marlin A1 </Typography>
+          <Typography variant="h6">
+            {payloadType}
+          </Typography>
+          <Typography variant="caption">
+            Launch Site
+          </Typography>
+          <Typography variant="h6">
+            {site}
+          </Typography>
+          <Typography variant="subtitle1">
+            Launch Success
+          </Typography>
+          {launchSuccess === true
+            ? (
+              <Typography>
+                <CheckCircleIcon style={{ color: '#4caf50' }} />
+              </Typography>
+            )
+            : (
+              <Typography>
+                <CancelIcon style={{ color: '#f44336' }} />
+              </Typography>
+            )}
 
         </CardContent>
       </Collapse>
     </Card>
   );
 }
+
+// import React from 'react';
+
+// const CardComponent = () => (
+//   <div>
+//     Hi
+//   </div>
+// );
+
+// export default CardComponent;
