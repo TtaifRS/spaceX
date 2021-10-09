@@ -13,3 +13,7 @@ test('search spaceX', () => {
   const headingElement = screen.getByText(/spaceX/i);
   expect(headingElement).toBeInTheDocument();
 });
+
+// unfortunately couldn't solve this error.
+// eslint-disable-next-line max-len
+// (typeError: Cannot destructure property 'datas' of '(0 , _reactRedux.useSelector)(...)' as it is undefined.).
