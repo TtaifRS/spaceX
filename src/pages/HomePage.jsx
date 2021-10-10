@@ -75,7 +75,7 @@ const HomePage = () => {
     setItems(datas);
     setTimeout(() => {
       ref.current.click();
-    }, 1000);
+    }, 5000);
   }, []);
 
   const successLaunch = () => {
